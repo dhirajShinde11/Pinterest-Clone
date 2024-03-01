@@ -1,0 +1,25 @@
+router.get('/postdata',async function(req,res){
+  let user =await  modeluser.findOne({_id:"65dff9982f0f3e49fc364e98"}).populate('post')
+  res.send(user)
+})
+
+
+
+router.get('/create',async function(req, res) {
+const createduser = await modeluser.create({
+    name: "dhiraj shinde",
+  email:"dhiraj200@gmail.com",
+  })
+  res.send(createduser)
+});
+
+router.get('/createPost',async function(req ,res){
+ const cretaedPost = await modelPost.create({
+    text:"hello my name is pro",
+    user:"65dff9982f0f3e49fc364e98"
+  })
+  let user = await modeluser.findOne({_id:"65dff9982f0f3e49fc364e98"})
+  user.post.push(cretaedPost._id)
+  await user.save();
+  res.send("done")
+})
