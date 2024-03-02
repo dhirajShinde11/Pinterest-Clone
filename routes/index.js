@@ -11,23 +11,30 @@ router.get('/', function(req,res){
 })
 router.get('/feed', function(req,res){
   res.render('feed')
+
 })
+
+router.get('/login', function(req,res){
+  res.render('login',{error:req.flash('error')}) 
+})
+
 router.get('/register', function(req,res){
   res.render('index')
 })
-router.get('/profile',isLoggedIn, function(req,res){
-  res.render('profile')
+router.get('/profile',isLoggedIn, async function(req,res){
+  const user = await modeluser.findOne({
+    username:req.session.passport.user
+  })
+  res.render('profile',{user})
 })
-router.get('/login', function(req,res){
-  res.render('login') 
-})
+
 
 router.post('/register',function(req,res){
  const { username , email } = req.body;
  const userdata = new modeluser({username,email})
 
    modeluser.register(userdata,req.body.password)
-  .then(function(){
+  .then(function(regitereduser){
     passport.authenticate('local')(req,res,function(){
       res.redirect('/profile')
     })
@@ -35,7 +42,8 @@ router.post('/register',function(req,res){
 
   router.post('/login',passport.authenticate("local",{
     successRedirect:"/profile",
-    failureRedirect:"/login"
+    failureRedirect:"/login",
+    failureFlash : true
   }),function(req,res){
    })
      
