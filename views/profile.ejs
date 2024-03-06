@@ -18,17 +18,28 @@
           <p class="tagline">Keep going.</p>
           <p class="description">Masih belajar CSS dan HTML.</p>
           <a href="/login" class="button">Logout</a>
+          <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="text" name="filecaption" placeholder="Some caption">
+            <input  type="file" name="file" >
+            <button type="submit">upload</button>
+          </form>
         </div>
     </div>
+
     <div class="conatainer">
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+      <div class="cards" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: start;">
+        <% user.posts.forEach(post => { %>
+          <div class="card" style="width: 18rem;">
+            <img src="/images/uploads/<%=post.image %>" class="card-img-top" >
             <div class="card-body">
               <h5 class="card-title">Card title</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
+      <% }); %>
+      </div>
+       
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>

@@ -16,11 +16,12 @@ email: {
     required: true,
     unique: true
 },
-post: [{
+posts: [{
   type:mongoose.Schema.Types.ObjectId,
   ref:'Post'
 }],
 datecreated:{
+  
   type:Date,
   default:Date.now()
 }
